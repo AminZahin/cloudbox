@@ -1,27 +1,55 @@
-*.log
+# OS
 .DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment
 .env
-.env.backup
-.env.production
+.env.*
+!.env.example
+
+# IDE
+.idea/
+.vscode/
+.zed/
 .phpactor.json
-.phpunit.result.cache
-/.codex
-/.cursor/
-/.idea
-/.nova
-/.phpunit.cache
-/.vscode
-/.zed
-/auth.json
-/node_modules
-/public/build
-/public/fonts-manifest.dev.json
+
+# AI Tools
+.cursor/
+.codex/
+
+# Laravel
+/vendor/
+/node_modules/
+
+# Build
+/public/build/
 /public/hot
 /public/storage
+
+# Cache
+.phpunit.result.cache
+.phpunit.cache/
+_ide_helper.php
+
+# Laravel Storage
 /storage/*.key
 /storage/pail
-/vendor
-_ide_helper.php
+
+# Homestead
 Homestead.json
 Homestead.yaml
-Thumbs.db
+
+# Auth
+auth.json
+
+# Nova
+.nova/
+
+# Testing
+coverage/
+
+# Docker
+docker-compose.override.yml
