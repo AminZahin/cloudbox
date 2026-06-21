@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('share_links', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('stored_file_id')
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->string('token')->unique();
+            $table->timestamp('expires_at')->nullable();
+
             $table->timestamps();
         });
     }

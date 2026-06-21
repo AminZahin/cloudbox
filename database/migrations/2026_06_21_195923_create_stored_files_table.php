@@ -6,32 +6,32 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('share_links', function (Blueprint $table) {
+        Schema::create('stored_files', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('stored_file_id')
+            $table->foreignId('tenant_id')
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->string('token')->unique();
+            $table->foreignId('folder_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
 
-            $table->timestamp('expires_at')
-                ->nullable();
+            $table->string('original_name');
+            $table->string('stored_name');
+            $table->string('path');
+            $table->unsignedBigInteger('size');
+            $table->string('mime_type');
 
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('share_links');
+        Schema::dropIfExists('stored_files');
     }
 };
