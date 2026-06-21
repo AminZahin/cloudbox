@@ -2,28 +2,38 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Tenant extends Model
+class User extends Authenticatable
 {
+    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasFactory, Notifiable;
+
     protected $fillable = [
+        'tenant_id',
         'name',
-        'slug',
+        'email',
+        'password',
     ];
 
-    public function users(): HasMany
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    protected function casts(): array
     {
-        return $this->hasMany(User::class);
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
     }
 
-    public function folders(): HasMany
+    public function tenant(): BelongsTo
     {
-        return $this->hasMany(Folder::class);
-    }
-
-    public function storedFiles(): HasMany
-    {
-        return $this->hasMany(StoredFile::class);
+        return $this->belongsTo(Tenant::class);
     }
 }
