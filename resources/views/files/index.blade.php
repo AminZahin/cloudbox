@@ -54,13 +54,29 @@
                             {{ number_format($file->size / 1024, 2) }} KB
                         </td>
 
-                        <td class="p-3">
+                        <td class="p-3 flex gap-3">
                             <a
                                 href="{{ route('files.download', $file) }}"
                                 class="text-blue-600"
                             >
                                 Download
                             </a>
+
+                            <form
+                                method="POST"
+                                action="{{ route('files.destroy', $file) }}"
+                                onsubmit="return confirm('Delete this file?')"
+                            >
+                                @csrf
+                                @method('DELETE')
+
+                                <button
+                                    type="submit"
+                                    class="text-red-600"
+                                >
+                                    Delete
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @empty

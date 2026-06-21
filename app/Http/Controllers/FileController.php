@@ -56,4 +56,20 @@ class FileController extends Controller
             $storedFile->original_name
         );
     }
+
+    public function destroy(StoredFile $storedFile)
+    {
+        abort_if(
+            $storedFile->tenant_id !== Auth::user()->tenant_id,
+            403
+        );
+
+        if (Storage::exists($storedFile->path)) {
+            Storage::delete($storedFile->path);
+        }
+
+        $storedFile->delete();
+
+        return back()->with('success', 'File deleted.');
+    }
 }
